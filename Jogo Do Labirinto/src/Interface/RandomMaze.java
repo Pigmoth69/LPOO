@@ -20,6 +20,7 @@ public class RandomMaze extends Maze {
 	{
 		type = 1;
 		generateMaze();
+		GenerateSword();
 	}
 	
 	void generateMaze()
@@ -88,7 +89,7 @@ public class RandomMaze extends Maze {
 			y = 4*size-4 - saida + 1;
 		}
 		
-		exit = new Exit(x, y);
+		SetExit(x, y);
 	}
 	
 	

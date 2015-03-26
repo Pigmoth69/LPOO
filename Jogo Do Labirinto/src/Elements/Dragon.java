@@ -21,6 +21,10 @@ public class Dragon extends Element {
 		this.type=type;
 	}
 	
+	public void setDead(){
+		estado = ' ';
+	}
+	
 	public void setNormalDragon()
 	{
 		estado = 'D';
