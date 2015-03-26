@@ -19,7 +19,7 @@ public class GameState {
 	
 	//Global GameState
 	public static GameState g;
-	
+	 
 	//Private Objects
 	private Maze labirinto;
 	private int dragonsSize;
@@ -32,7 +32,7 @@ public class GameState {
 	private int dardosJogador = 0;
 	private Shield shield;
 	private boolean escudo = false;
-	
+	 
 	public static void main(String[] args){
 		g = new GameState();
 		
@@ -68,12 +68,16 @@ public class GameState {
 
 	public void SetMaze(int mazeType){
 		if (mazeType == 0)
-			g.labirinto= new StaticMaze();
+			this.labirinto= new StaticMaze();
 		else if (mazeType == 1)
-			g.labirinto = new RandomMaze();
+			this.labirinto = new RandomMaze();
 	}
 
-	public void GenerateDragons()
+	public void setDragonsType(int type)
+	{
+		dragonsType = type;
+	}
+	public void GenerateDragons() 
 	{
 		for(int i = 0; i < dragonsSize;i++)
 		{
@@ -102,6 +106,14 @@ public class GameState {
 		dragons.add(new Dragon(x, y, dragonsType));
 	}
 
+	public Player getPlayer(){
+		return player;
+	}
+	
+	public int getDragonSize(){
+		return dragonsSize;
+	}
+	
 	public void GeneratePlayer()
 	{
 		Random rand = new Random();
@@ -122,9 +134,14 @@ public class GameState {
 	}
 	
 	public void NewPlayer(int x, int y){
-		player = new Player(x, y);
+		player = new Player(x, y); 
 	}
 
+	
+	public Maze getMaze(){
+		return labirinto;
+	}
+	
 	public void GenerateDarts(){
 
 		int quantidade;
@@ -185,7 +202,7 @@ public class GameState {
 			else if(labirinto.getBoard()[player.getY()][player.getX()-1] =='E')
 			{
 				player.setArmado();
-				sword.removeSword();
+				labirinto.sword.removeSword();
 			}
 			else if(labirinto.getBoard()[player.getY()][player.getX()-1] =='d')
 			{
@@ -213,7 +230,7 @@ public class GameState {
 			else if(labirinto.getBoard()[player.getY()-1][player.getX()] == 'E')
 			{
 				player.setArmado();
-				sword.removeSword();
+				labirinto.sword.removeSword();
 			}
 			else if(labirinto.getBoard()[player.getY()-1][player.getX()] =='d')
 			{
@@ -241,7 +258,7 @@ public class GameState {
 			else if(labirinto.getBoard()[player.getY()+1][player.getX()] == 'E')
 			{
 				player.setArmado();
-				sword.removeSword();
+				labirinto.sword.removeSword();
 			}
 			else if(labirinto.getBoard()[player.getY()+1][player.getX()] =='d')
 			{
@@ -270,7 +287,7 @@ public class GameState {
 			else if(labirinto.getBoard()[player.getY()][player.getX()+1] == 'E')
 			{
 				player.setArmado();
-				sword.removeSword();
+				labirinto.sword.removeSword();
 			}
 			else if(labirinto.getBoard()[player.getY()][player.getX()+1] =='d')
 			{
@@ -320,7 +337,7 @@ public class GameState {
 	{
 		for(int i = 0; i < dragonsSize;i++)
 		{
-			if(dragons.get(i).getX() == sword.getX() && dragons.get(i).getY()== sword.getY())
+			if(dragons.get(i).getX() == labirinto.sword.getX() && dragons.get(i).getY()== labirinto.sword.getY())
 			{
 				dragons.get(i).setSwordAndDragon();
 				
@@ -380,7 +397,7 @@ public class GameState {
 	
 	public void PrintSword()
 	{
-		labirinto.getBoard()[sword.getY()][sword.getX()]= sword.getEstado();
+		labirinto.getBoard()[labirinto.sword.getY()][labirinto.sword.getX()]= labirinto.sword.getEstado();
 	}
 	
 	public void PrintExit()

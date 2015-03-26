@@ -39,6 +39,10 @@ public class Maze {
 		exit = new Exit(x, y);
 	}
 	
+	public Exit getExit(){
+		return exit;
+	}
+	
 	public void SetSword(int x, int y){
 		sword = new Sword(x, y);
 	}

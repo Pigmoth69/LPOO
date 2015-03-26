@@ -1,8 +1,5 @@
 package Interface;
 
-import java.util.Random;
-
-import Elements.Exit;
 
 public class StaticMaze extends Maze{
 
