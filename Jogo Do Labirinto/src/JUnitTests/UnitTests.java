@@ -115,8 +115,7 @@ public class UnitTests {
 		
 		assertEquals(g.movePlayer(exitPath[exitPath.length-1]), false);
 		assertEquals(g.checkPlayerWin(),false);
-	}
-	
+	} 
 	
 	
 	
