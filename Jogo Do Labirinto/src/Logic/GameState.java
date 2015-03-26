@@ -11,12 +11,12 @@ import Interface.Maze;
 import Interface.RandomMaze;
 import Interface.StaticMaze;
 
-
+//cenas
 public class GameState {
 	
 	Player player = new Player(0,0);
 	int dragonsSize;
-	int dragonsType;
+	int dragonsType; 
 	Sword sword = new Sword(0,0);
 	Maze labirinto = new Maze();
 	ArrayList<Dragon> dragons = new ArrayList<Dragon>();
