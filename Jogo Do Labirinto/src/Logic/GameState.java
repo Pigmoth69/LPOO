@@ -11,7 +11,7 @@ import Interface.Maze;
 import Interface.RandomMaze;
 import Interface.StaticMaze;
 
-//cenas
+//cenas 1
 public class GameState {
 	
 	Player player = new Player(0,0);
