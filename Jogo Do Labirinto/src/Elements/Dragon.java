@@ -25,10 +25,14 @@ public class Dragon extends Element {
 	{
 		estado = 'D';
 	}
+	public void setSwordAndDragon()
+	{
+		estado = 'F';
+	}
 	
 	public void setSleep()
 	{
-		estado = 'S';
+		estado = 's';
 	}
 	public void setSleepTime(int numSleep)
 	{
@@ -40,15 +44,16 @@ public class Dragon extends Element {
 		return numPlaysSleeping;
 	}
 	
+	public void subbPlaySleeping()
+	{
+		numPlaysSleeping--;
+	}
+	
 	public int getType()
 	{
 		return type;
 	}
 	
-	public void setDead()
-	{
-		estado = ' ';
-	}
 	
 	public void moveUP()
 	{

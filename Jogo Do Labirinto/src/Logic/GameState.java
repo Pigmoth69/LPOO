@@ -1,4 +1,5 @@
 package Logic;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,12 +15,12 @@ import Interface.StaticMaze;
 public class GameState {
 	
 	Player player = new Player(0,0);
-	Dragon[] dragons;
 	int dragonsSize;
 	int dragonsType;
-	Exit exit = new Exit(0,0);
 	Sword sword = new Sword(0,0);
 	Maze labirinto = new Maze();
+	ArrayList<Dragon> dragons = new ArrayList<Dragon>();
+	
 	
 	public static void main(String[] args)
 	{
@@ -31,6 +32,9 @@ public class GameState {
 			g.labirinto= new StaticMaze();
 		else if (type == 1)
 			g.labirinto = new RandomMaze();
+		//setExit(g.labirinto.exit);
+		
+		
 		
 		g.chooseDragonsNum();
 		g.chooseDragonType();
@@ -50,6 +54,8 @@ public class GameState {
 	
 	//funções ainda não alteradas
 	
+	
+
 	void Jogar()
 	{
 		boolean jogar = true;
@@ -60,23 +66,22 @@ public class GameState {
 			
 			System.out.println("Use the following keys to play the game! ");
 			System.out.println("Move UP = 'W' Move Down = 'S' Move LEFT = 'A' Move RIGHT = 'D'");
+			
 			if(checkDragonsColision())
 			{
 				System.out.println("GAME OVER!");
 				jogar = false;
 			}
+			
 			if(checkPlayerWin())
 			{
 				System.out.println("YOU WON!!!");
 				jogar = false;
 			}
 			
-			for(int i = 0; i < dragonsSize;i++)
-				if(dragons[i].getEstado()== 'D')
-					PrintDragons();
-			
 			PrintExit();
 			PrintSword();
+			PrintDragons();
 			PrintPlayer();
 			labirinto.PrintLab();
 			
@@ -104,46 +109,57 @@ public class GameState {
     //tiver a espada mata o dragao
     // se for morto pelo dragao retorna true
 	
+	
+
+
+
+
+
 	boolean checkDragonsColision() 
 	{
-		boolean openExit = true;
-		for(int x = 0; x < dragonsSize;x++)
-		{
-			if(dragons[x].getEstado() == ' ')
-			{
-				openExit = false;
-				break;
-			}	
-		}
-		if(openExit)
-			labirinto.exit.setOpen();
-		
-		
 		for(int i = 0; i < dragonsSize;i++)
 		{
-			if(dragons[i].getEstado() == ' ')
-				continue; //dragão está morto e continua
-			if(dragons[i].getX()== sword.getX() && dragons[i].getY()==sword.getY() && dragons[i].getEstado()!=' ')
-				sword.swordDragon();
-			else
-				if(player.getEstado()!= 'A')
-					sword.swordArmada();
-
-			if(Math.abs(player.getX()-dragons[i].getX()) == 0 && Math.abs(player.getY()-dragons[i].getY()) == 1 
-					||Math.abs(player.getX()-dragons[i].getX()) == 1 && Math.abs(player.getY()-dragons[i].getY()) == 0
-					||Math.abs(player.getX()-dragons[i].getX()) == 0 && Math.abs(player.getY()-dragons[i].getY()) == 0) 
-				if(player.getEstado()== 'A')
+			if(dragons.get(i).getX() == sword.getX() && dragons.get(i).getY()== sword.getY())
+			{
+				dragons.get(i).setSwordAndDragon();
+				
+			}
+			if(Math.abs(player.getX()-dragons.get(i).getX()) == 0 && Math.abs(player.getY()-dragons.get(i).getY()) == 1 
+					||Math.abs(player.getX()-dragons.get(i).getX()) == 1 && Math.abs(player.getY()-dragons.get(i).getY()) == 0
+					||Math.abs(player.getX()-dragons.get(i).getX()) == 0 && Math.abs(player.getY()-dragons.get(i).getY()) == 0)
+			{
+				
+				if(player.getEstado() == 'H')
 				{
-					dragons[i].setDead();
-					PrintDragons();
-					break; // dragao morto
+					if(dragons.get(i).getEstado()== 's') //dragao a dormir
+						continue;
+					else
+						return true;
+
 				}
 				else
-					return true;	//heroi desarmado morre
+				{
+					dragons.remove(i);
+					dragonsSize--;
+					i--;					
+				}
+				
+			}
+			
+			
+			
+			
+			
 		}
-
-		return false; // não está adjacente ao jogador
+		return false;
+		
 	}
+	
+	
+	
+	
+	
+	
 	
 	
 	boolean checkPlayerWin()
@@ -170,16 +186,17 @@ public class GameState {
 	
 	void PrintExit()
 	{
-		labirinto.getBoard()[labirinto.exit.getY()][labirinto.exit.getX()]=labirinto.exit.getEstado();
+			if(dragonsSize == 0)
+				labirinto.exit.setOpen();
+			labirinto.getBoard()[labirinto.exit.getY()][labirinto.exit.getX()]=labirinto.exit.getEstado();
 	}
 	
 	void PrintDragons()
 	{
 		for(int i = 0; i < dragonsSize;i++)
-		{
-		labirinto.getBoard()[dragons[i].getY()][dragons[i].getX()]= dragons[i].getEstado();
-		}
+			labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()]=dragons.get(i).getEstado();
 	}
+	
 	
 	 int chooseMazeType()
 	{
@@ -219,6 +236,7 @@ public class GameState {
 			numDragons = sc.nextInt();
 			}while( numDragons >10 && numDragons <0);
 			dragonsSize = numDragons; 
+			
 	 }
 	 
 	 
@@ -226,9 +244,8 @@ public class GameState {
 	void generateElements() // gera os elementos de jogo como o dragão, heroi, espada
 	{
 		generateSword();
-		generateDragon();
+		generateDragons();
 		generatePlayer();
-		//generateExit();
 		return;
 	}
 	
@@ -251,12 +268,12 @@ public class GameState {
 		 }
 	 }
 	 
-	 void generateDragon()
+	 
+
+	 void generateDragons()
 	 {
-		 dragons = new Dragon[dragonsSize];
-		 for(int i = 0; i < dragonsSize;i++){
-
-
+		 for(int i = 0; i < dragonsSize;i++)
+		 {
 			 Random rand = new Random();
 			 boolean condition = true;
 			 int labSize = labirinto.getSize();
@@ -267,13 +284,14 @@ public class GameState {
 				 int y_pos =rand.nextInt(labSize);
 				 if(labirinto.getBoard()[y_pos][x_pos] == ' ' )  // esta condição não abrange estar player ao lado do dragao
 				 {
-					 dragons[i] = new Dragon(x_pos,y_pos,dragonsType);
-					 labirinto.getBoard()[y_pos][x_pos] = dragons[i].getEstado();
+					 dragons.add(new Dragon(x_pos,y_pos,dragonsType));
 					 condition = false;
 				 } 
 			 }
 		 }
 	 }
+	 
+	 
 	 
 	 void generatePlayer()
 	 {
@@ -306,38 +324,53 @@ public class GameState {
 	 2 - RANDOM MOVING DRAGON + SLEEPING;
 	 */
 	 
+
 	 
-	 void moveDragon(int dragonPos) //int pos = posicao no array de dragoes do dragão
-	 {
-		 
-		 if(dragons[dragonPos].getNumPlaysSleeping()>0 && dragons[dragonPos].getEstado()== ' ')
-			 return;
-		 else
+	 void moveDragons() // move o dragão tendo em conta os varios tipos de dragoes ---->falta implementar
+	{
+		 for(int i = 0; i < dragonsSize;i++)
 		 {
-			 dragons[dragonPos].setNormalDragon();
-			 //falta imprimir o dragao no mapa
+			 if(dragons.get(i).getType()==0)
+				 return;
+			 else
+			 {
+				 if(dragons.get(i).getNumPlaysSleeping() > 0){
+					 dragons.get(i).subbPlaySleeping();
+					 continue;
+				 }
+				 else
+				 {
+					 dragons.get(i).setNormalDragon();
+					 moveDragon(i);	
+				 }
+			 }
 		 }
-		 Random rand = new Random();
+	}
+	void moveDragon(int i)
+	{
+		
+			Random rand = new Random();
 			boolean choice = true;
 			
-			labirinto.getBoard()[dragons[dragonPos].getY()][dragons[dragonPos].getX()]=' ';
+			labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()]=' ';
 			
 			while(choice)
 			{
 				// move para cima, move para baixo, move para a esquerda, move para a direita, fica parado, fica a dormir
 				int move;
-				if(dragons[dragonPos].getType() == 1)
+				
+				if(dragons.get(i).getType() == 1)
 					move = rand.nextInt(4)+0; 
 				else
 					move = rand.nextInt(5)+0;
 
 				if(move == 0) //move UP
 				{ 
-					if(labirinto.getBoard()[dragons[dragonPos].getY()-1][dragons[dragonPos].getX()]=='X')
+					if(labirinto.getBoard()[dragons.get(i).getY()-1][dragons.get(i).getX()]!=' ')
 						continue;
 					else
 					{
-						dragons[dragonPos].moveUP();
+						dragons.get(i).moveUP();
 						choice = false;
 						break;
 					}
@@ -345,11 +378,11 @@ public class GameState {
 				}
 				else if(move == 1) // move DOWN
 				{
-					if(labirinto.getBoard()[dragons[dragonPos].getY()+1][dragons[dragonPos].getX()]=='X')
+					if(labirinto.getBoard()[dragons.get(i).getY()+1][dragons.get(i).getX()]!=' ')
 						continue;
 					else
 					{
-						dragons[dragonPos].moveDOWN();
+						dragons.get(i).moveDOWN();
 						choice = false;
 						break;
 					}
@@ -357,34 +390,33 @@ public class GameState {
 				}
 				else if(move == 2) //move LEFT
 				{
-					if(labirinto.getBoard()[dragons[dragonPos].getY()][dragons[dragonPos].getX()-1]=='X')
+					if(labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()-1]!=' ')
 						continue;
 					else
 					{
-						dragons[dragonPos].moveLEFT();
+						dragons.get(i).moveLEFT();
 						choice = false;
 						break;
 					}
 				}
 				else if(move == 3) //move RIGHT
 				{
-					if(labirinto.getBoard()[dragons[dragonPos].getY()][dragons[dragonPos].getX()+1]=='X')
+					if(labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()+1]!=' ')
 						continue;
 					else
-					{
-						dragons[dragonPos].moveRIGHT();
+					{ 
+						dragons.get(i).moveRIGHT();
 						choice = false;
 						break;
 					}
 				}
-				else if (move == 4 && dragons[dragonPos].getType() == 2)
+				else if (move == 4 && dragons.get(i).getType() == 2)
 				{
 					//numero de jogadas que vai ficar a dormir
 					//numero maximo de jogadas que vai ficar a dormir são 5
 					int sleep = rand.nextInt(5) + 1;
-					dragons[dragonPos].setSleepTime(sleep);
-					dragons[dragonPos].setSleep();
-					PrintDragons();
+					dragons.get(i).setSleepTime(sleep); // dragons[dragonPos].setSleepTime(sleep);
+					dragons.get(i).setSleep();
 					choice = false;
 					break;
 				}
@@ -393,25 +425,10 @@ public class GameState {
 					choice=false;
 					break;
 				}
-
 			}
 
 			return;
-	 }
-
-	 
-	 void moveDragons() // move o dragão tendo em conta os varios tipos de dragoes ---->falta implementar
-	{
-		 for(int i = 0; i < dragonsSize;i++)
-		 {
-			 if(dragons[i].getType() == 0)
-				 continue;
-			 else
-				 moveDragon(i);
-		 }
-		 return;
 	}
-	 
 	 
 	 
 	 
@@ -419,7 +436,8 @@ public class GameState {
 		{
 			if(move == 'a')
 			{
-				if(labirinto.getBoard()[player.getY()][player.getX()-1] == 'X')
+				if(labirinto.getBoard()[player.getY()][player.getX()-1] == 'X'||
+						(labirinto.getBoard()[player.getY()][player.getX()-1] == 's' && player.getEstado()!= 'A'))
 					return false;
 				if(labirinto.getBoard()[player.getY()][player.getX()-1] =='E')
 					{
@@ -430,7 +448,8 @@ public class GameState {
 			}
 			else if(move == 'w')
 			{
-				if(labirinto.getBoard()[player.getY()-1][player.getX()] == 'X')
+				if(labirinto.getBoard()[player.getY()-1][player.getX()] == 'X'||
+						(labirinto.getBoard()[player.getY()-1][player.getX()] == 's' && player.getEstado()!= 'A'))
 					return false;
 				if(labirinto.getBoard()[player.getY()-1][player.getX()] == 'E')
 					{
@@ -441,7 +460,8 @@ public class GameState {
 			}
 			else if(move == 's')
 			{
-				if(labirinto.getBoard()[player.getY()+1][player.getX()] == 'X')
+				if(labirinto.getBoard()[player.getY()+1][player.getX()] == 'X'||
+						(labirinto.getBoard()[player.getY()+1][player.getX()] == 's' && player.getEstado()!= 'A'))
 					return false;
 				if(labirinto.getBoard()[player.getY()+1][player.getX()] == 'E')
 					{
@@ -453,7 +473,8 @@ public class GameState {
 			}
 			else// (move == 'd')
 			{
-				if(labirinto.getBoard()[player.getY()][player.getX()+1] == 'X')
+				if(labirinto.getBoard()[player.getY()][player.getX()+1] == 'X'||
+						(labirinto.getBoard()[player.getY()][player.getX()+1] == 's' && player.getEstado()!= 'A'))
 					return false;
 				if(labirinto.getBoard()[player.getY()][player.getX()+1] == 'E')
 					{

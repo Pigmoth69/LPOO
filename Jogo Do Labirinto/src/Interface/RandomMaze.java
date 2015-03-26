@@ -21,6 +21,7 @@ public class RandomMaze extends Maze {
 		type = 1;
 		generateMaze();
 	}
+	
 	void generateMaze()
 	{
 		System.out.println("Insert the size you want to the maze: ");
@@ -29,15 +30,9 @@ public class RandomMaze extends Maze {
 		board = new char[size][size];
 		visitedCellsDimension = (size-1)/2;
 		visitedCells = new char[visitedCellsDimension][visitedCellsDimension];
-		
 		GenerateExit();
 		InicialWalls();
-		//PrintLab();
-		
 		GeneratePaths();
-		//PrintLab();
-		
-
 	}
 	
 	void PrintVerified(){
