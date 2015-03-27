@@ -39,13 +39,10 @@ public class UnitTests {
 		d.setDragonsType(0);
 		d.GenerateDragons();
 		d.GeneratePlayer();
-		
-		
-		//g.setDragonsType(0);
-		//g.AddDragons(1, 1);
-		//g.NewPlayer(5, 5);	
-		//g.PrintSword();
-		//g.PrintDragons();
+		d.GenerateDarts();
+		d.GenerateShield();
+		d.RefreshElements();
+		 
 	}
 	
 
@@ -163,11 +160,36 @@ public class UnitTests {
 		}
 		
 		assertEquals(g.checkDragonsFire(), false);	
-	}
+	}	
 	
 	@Test
-	public void cenas(){
+	public void TestRandomGeneratedElements()
+	{
 		GenerateTestFieldsRandomMaze();
+		int dragonNum=0;
+		int dartsNum=0;
+		boolean shieldExists=false;
+		
+		
+		for(int i = 0; i < d.getMaze().getSize()-1;i++)
+		{
+			for(int x = 0; x < d.getMaze().getSize()-1;i++)
+			{
+				if(d.getMaze().getBoard()[i][x] == 'd')
+					dartsNum++;
+				else if(d.getMaze().getBoard()[i][x] == '0')
+					shieldExists=true;
+				else if(d.getMaze().getBoard()[i][x] == 'D')
+					dragonNum++;
+			}
+		}
+		
+		//assertEquals(g.getDragonSize(), dragonNum);
+		//assertEquals(g., false);
+		
+		
+		
+		
 	}
 	
 	
