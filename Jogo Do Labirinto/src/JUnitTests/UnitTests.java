@@ -9,15 +9,18 @@ import Logic.GameState;
 public class UnitTests {
 	
 	GameState g;
+	GameState d;
+	
 	char[] swordPath = {'a','a','a','a','s','s','s'};
 	char[] playerPathToDragon = {'a','a','a','a','w','w','w'};
 	char[] swordToDragonPath = {'a','a','a','a','s','s','s','w','w','w','w','w','w'};
 	char[] dragonToexitPath = {'w','d','d','d','d','d','d','d','s','s','s','s','d'};
 	char[] exitPath = {'d','s','s','s','d','d','w','w','w','d'};
+	char[] burnPath =  {'a','a','a','a','w','w'};
 	
 	
 	
-	public void GenerateTestField(){
+	public void GenerateTestFieldStatic(){
 		g = new GameState();
 		g.SetMaze(0); 
 		g.setDragonsSize(1);
@@ -27,10 +30,28 @@ public class UnitTests {
 		g.PrintSword();
 		g.PrintDragons();
 	}
+	
+	
+	public void GenerateTestFieldsRandomMaze(){
+		d = new GameState();
+		d.SetMaze(1); 
+		d.setDragonsSize(3);
+		d.setDragonsType(0);
+		d.GenerateDragons();
+		d.GeneratePlayer();
+		
+		
+		//g.setDragonsType(0);
+		//g.AddDragons(1, 1);
+		//g.NewPlayer(5, 5);	
+		//g.PrintSword();
+		//g.PrintDragons();
+	}
+	
 
 	@Test
 	public void moveTestFreeCell() {
-		GenerateTestField();
+		GenerateTestFieldStatic();
 		assertEquals(g.movePlayer('a'), true);
 		assertEquals(g.getPlayer().getX(),4);
 		assertEquals(g.getPlayer().getY(),5);
@@ -41,7 +62,7 @@ public class UnitTests {
 	
 	@Test
 	public void moveAgainstWall() {
-		GenerateTestField();
+		GenerateTestFieldStatic();
 		assertEquals(g.movePlayer('w'), false);
 		assertEquals(g.getPlayer().getX(),5);
 		assertEquals(g.getPlayer().getY(),5);
@@ -52,7 +73,7 @@ public class UnitTests {
 	
 	@Test
 	public void catchSword() {
-		GenerateTestField();
+		GenerateTestFieldStatic();
 		
 		assertEquals(g.getMaze().getBoard()[8][1],'E');
 	
@@ -65,11 +86,9 @@ public class UnitTests {
 		assertEquals(g.getPlayer().getEstado(),'A');
 	}
 	
-	
-	
 	@Test
 	public void getKilledByDragon() {
-		GenerateTestField();
+		GenerateTestFieldStatic();
 		
 		assertEquals(g.getMaze().getBoard()[1][1],'D');
 		
@@ -80,10 +99,9 @@ public class UnitTests {
 		assertEquals(g.checkDragonsColision(),true);
 	}
 	
-	
 	@Test
 	public void killDragon() {
-		GenerateTestField();
+		GenerateTestFieldStatic();
 		
 		assertEquals(g.getMaze().getExit().getEstado(),'X');
 		for(int i = 0; i <swordToDragonPath.length ; i++)
@@ -104,7 +122,7 @@ public class UnitTests {
 	
 	@Test
 	public void directExit() {
-		GenerateTestField();
+		GenerateTestFieldStatic();
 		
 		assertEquals(g.getMaze().getExit().getEstado(),'X');
 		
@@ -119,6 +137,38 @@ public class UnitTests {
 	
 	
 	
+
+	
+	@Test
+	public void testFireColision(){
+		GenerateTestFieldStatic();
+		assertEquals(g.checkDragonsFire(), false);
+		for(int i = 0; i < burnPath.length;i++ )
+		{
+			assertEquals(g.movePlayer(burnPath[i]), true);
+		}
+		
+		assertEquals(g.checkDragonsFire(), true);	
+	}
+	
+	@Test
+	public void testShieldAndFireColision(){
+		
+		GenerateTestFieldStatic();
+		g.activateEscudo();
+		assertEquals(g.checkDragonsFire(), false);
+		for(int i = 0; i < burnPath.length;i++ )
+		{
+			assertEquals(g.movePlayer(burnPath[i]), true);
+		}
+		
+		assertEquals(g.checkDragonsFire(), false);	
+	}
+	
+	@Test
+	public void cenas(){
+		GenerateTestFieldsRandomMaze();
+	}
 	
 	
 	

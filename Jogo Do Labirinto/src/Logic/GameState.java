@@ -77,6 +77,7 @@ public class GameState {
 	{
 		dragonsType = type;
 	}
+	
 	public void GenerateDragons() 
 	{
 		for(int i = 0; i < dragonsSize;i++)
@@ -136,7 +137,6 @@ public class GameState {
 	public void NewPlayer(int x, int y){
 		player = new Player(x, y); 
 	}
-
 	
 	public Maze getMaze(){
 		return labirinto;
@@ -190,6 +190,11 @@ public class GameState {
 	
 	public void SetShield(int x, int y){
 		shield = new Shield(x, y);
+	}
+	
+	public void activateEscudo()
+	{
+		escudo = true;
 	}
 	
 	public boolean movePlayer(char move)
