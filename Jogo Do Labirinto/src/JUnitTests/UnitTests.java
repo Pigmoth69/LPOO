@@ -42,7 +42,6 @@ public class UnitTests {
 		d.GenerateDarts();
 		d.GenerateShield();
 		d.RefreshElements();
-		 
 	}
 	
 
@@ -171,22 +170,22 @@ public class UnitTests {
 		boolean shieldExists=false;
 		
 		
-		for(int i = 0; i < d.getMaze().getSize()-1;i++)
+		int var = d.getMaze().getSize()-1;
+		for(int i = 0; i < var;i++)
 		{
-			for(int x = 0; x < d.getMaze().getSize()-1;i++)
+			for(int x = 0; x < var;x++)
 			{
-				if(d.getMaze().getBoard()[i][x] == 'd')
+				if(d.getMaze().getBoard()[x][i] == 'd' ||d.getMaze().getBoard()[x][i] == 'F' )
 					dartsNum++;
-				else if(d.getMaze().getBoard()[i][x] == '0')
+				else if(d.getMaze().getBoard()[x][i] == '0')
 					shieldExists=true;
-				else if(d.getMaze().getBoard()[i][x] == 'D')
+				else if(d.getMaze().getBoard()[x][i] == 'D')
 					dragonNum++;
 			}
-		}
-		
-		//assertEquals(g.getDragonSize(), dragonNum);
-		//assertEquals(g., false);
-		
+		}	
+		assertEquals(d.getDragonSize(), dragonNum);
+		assertEquals(shieldExists, true);
+		assertEquals(d.getNumDardos(), dartsNum);
 		
 		
 		

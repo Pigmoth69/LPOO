@@ -73,6 +73,11 @@ public class GameState {
 			this.labirinto = new RandomMaze();
 	}
 
+	
+	public int getNumDardos(){
+		return dardos.size();
+	}
+	
 	public void setDragonsType(int type)
 	{
 		dragonsType = type;
@@ -112,7 +117,7 @@ public class GameState {
 	}
 	
 	public int getDragonSize(){
-		return dragonsSize;
+		return this.dragonsSize;
 	}
 	
 	public void GeneratePlayer()
