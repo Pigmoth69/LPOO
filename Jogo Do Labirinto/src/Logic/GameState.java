@@ -101,7 +101,9 @@ public class GameState {
 			{
 				int x_pos = rand.nextInt(labSize);
 				int y_pos =rand.nextInt(labSize);
-				if(labirinto.getBoard()[y_pos][x_pos] == ' ' && !checkDragonAdjacentWithPlayer(x_pos,y_pos))  
+				if(checkDragonAdjacentWithPlayer(x_pos,y_pos))
+					continue;
+				if(labirinto.getBoard()[y_pos][x_pos] == ' ')  
 				{
 					dragons.add(new Dragon(x_pos,y_pos,dragonsType));
 					condition = false;
@@ -115,16 +117,16 @@ public class GameState {
 		if(player.getX() == x_pos)
 		{
 			if(Math.abs(player.getY()-y_pos)==1)
-				return false;
-			else
 				return true;
+			else
+				return false;
 		}
 		if(player.getY() == y_pos)
 		{
 			if(Math.abs(player.getX()-x_pos)==1)
-				return false;
-			else
 				return true;
+			else
+				return false;
 		}
 		return false;
 	}
@@ -708,47 +710,6 @@ public class GameState {
 		return;
 	}
 
-	
-	
-	/*asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * asfasgasgasggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg
-	 * */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-	// inicio das funções feitas agora
-
-
-
 	public int checkIfDragonInLineOfPlayer(int pos) {
 		int x_pos = dragons.get(pos).getX();
 		int y_pos = dragons.get(pos).getY();
@@ -888,18 +849,6 @@ public class GameState {
 			labirinto.getBoard()[fireballs.get(i).getY()][fireballs.get(i).getX()]=fireballs.get(i).getEstado();
 		}
 	}
-
-
-
-	
-
-
-
-
-
-	//fim
-
-
 
 	public int Jogar()
 	{
