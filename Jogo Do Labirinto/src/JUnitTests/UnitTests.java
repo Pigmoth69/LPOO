@@ -135,7 +135,7 @@ public class UnitTests {
 	
 
 	
-	@Test
+	/*@Test
 	public void testFireColision(){
 		GenerateTestFieldStatic();
 		assertEquals(g.checkDragonsFire(), false);
@@ -145,9 +145,9 @@ public class UnitTests {
 		}
 		
 		assertEquals(g.checkDragonsFire(), true);	
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testShieldAndFireColision(){
 		
 		GenerateTestFieldStatic();
@@ -159,7 +159,7 @@ public class UnitTests {
 		}
 		
 		assertEquals(g.checkDragonsFire(), false);	
-	}	
+	}*/
 	
 	@Test
 	public void TestRandomGeneratedElements()

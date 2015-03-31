@@ -1,5 +1,4 @@
 package Elements;
-import java.util.Random;
 
 
 public class Dragon extends Element {
