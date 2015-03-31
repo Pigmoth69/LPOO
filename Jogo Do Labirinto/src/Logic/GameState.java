@@ -714,10 +714,11 @@ public class GameState {
 		int x_pos = dragons.get(pos).getX();
 		int y_pos = dragons.get(pos).getY();
 
-
+		//pode mudar-se a distancia desde quando ele começa a mandar a fireball 
+		//mudando o labirinto.getSize() para uma constante que indica o range 
 		for(int i = x_pos ; i < labirinto.getSize();i++) // intercecção na direita
 		{
-			if(labirinto.getBoard()[y_pos][i]=='X')
+			if(labirinto.getBoard()[y_pos][i]=='X' )
 				break;
 			if(player.getX() == i && player.getY() == y_pos)//labirinto.getBoard()[y_pos][i]=='H')
 				return 2;
