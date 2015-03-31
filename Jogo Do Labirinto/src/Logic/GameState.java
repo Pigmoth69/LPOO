@@ -432,8 +432,8 @@ public class GameState {
 		PrintSword();
 		PrintDarts();
 		PrintDragons();
-		PrintPlayer();
 		PrintFireballs();
+		PrintPlayer();
 		labirinto.PrintLab();
 	}
 	
@@ -758,7 +758,7 @@ public class GameState {
 		{
 			if(labirinto.getBoard()[y_pos][i]=='X')
 				break;
-			if(player.getX() == i)//labirinto.getBoard()[y_pos][i]=='H')
+			if(player.getX() == i && player.getY() == y_pos)//labirinto.getBoard()[y_pos][i]=='H')
 				return 2;
 		}
 
@@ -766,7 +766,7 @@ public class GameState {
 		{
 			if(labirinto.getBoard()[i][x_pos]=='X')
 				break;
-			if(player.getY()==i)//labirinto.getBoard()[i][x_pos]=='H')
+			if(player.getY()==i && player.getX() == x_pos)//labirinto.getBoard()[i][x_pos]=='H')
 				return 1;
 		}
 
@@ -775,7 +775,7 @@ public class GameState {
 		{
 			if(labirinto.getBoard()[y_pos][i]=='X')
 				break;
-			if(player.getX()==i)//labirinto.getBoard()[y_pos][i]=='H')
+			if(player.getX()==i && player.getY()==y_pos)//labirinto.getBoard()[y_pos][i]=='H')
 				return 3;
 		}
 
@@ -783,7 +783,7 @@ public class GameState {
 		{
 			if(labirinto.getBoard()[i][x_pos]=='X')
 				break;
-			if(player.getY()==i)//labirinto.getBoard()[i][x_pos]=='H')
+			if(player.getY()==i && player.getX()==x_pos)//labirinto.getBoard()[i][x_pos]=='H')
 				return 0;
 		}
 		return -1;
@@ -816,6 +816,8 @@ public class GameState {
 
 		if(fireballs.get(i).getType()==0) // move para cima
 		{
+			
+			
 			if(fireballs.get(i).getLife()==0)
 			{
 				fireballs.remove(i);
@@ -826,7 +828,7 @@ public class GameState {
 				fireballs.remove(i);
 				return false;
 			}
-			else
+			else 
 				fireballs.get(i).moveUP();
 
 		}
@@ -891,20 +893,7 @@ public class GameState {
 
 	
 
-	
-	/*
-	 
-	  for(int i = 0; i < dragons.size();i++)
-					{
-						int t = checkIfDragonInLineOfPlayer(i);
-						if(t!= -1)
-						{
-							Fireball f1 = new Fireball(t,dragons.get(i).getX(),dragons.get(i).getY());
-							fireballs.add(f1);
-						}
-					}
 
-	  */
 
 
 
