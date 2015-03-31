@@ -45,8 +45,8 @@ public class GameState {
 		
 		g.saida = g.labirinto.exit;
 		g.sword = g.labirinto.sword;
-		g.GenerateDragons();
 		g.GeneratePlayer();
+		g.GenerateDragons();
 		g.GenerateDarts();
 		g.GenerateShield();
 		int result = g.Jogar();
@@ -66,6 +66,16 @@ public class GameState {
 		return;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//checked
 	public void SetMaze(int mazeType){
 		if (mazeType == 0)
 			this.labirinto= new StaticMaze();
@@ -73,16 +83,18 @@ public class GameState {
 			this.labirinto = new RandomMaze();
 	}
 
-	
+	//checked
 	public int getNumDardos(){
 		return dardos.size();
 	}
 	
+	//checked
 	public void setDragonsType(int type)
 	{
 		dragonsType = type;
 	}
 	
+	//checked
 	public void GenerateDragons() 
 	{
 		for(int i = 0; i < dragonsSize;i++)
@@ -95,7 +107,7 @@ public class GameState {
 			{
 				int x_pos = rand.nextInt(labSize);
 				int y_pos =rand.nextInt(labSize);
-				if(labirinto.getBoard()[y_pos][x_pos] == ' ' )  // esta condição não abrange estar player ao lado do dragao
+				if(labirinto.getBoard()[y_pos][x_pos] == ' ' && !checkDragonAdjacentWithPlayer(x_pos,y_pos))  
 				{
 					dragons.add(new Dragon(x_pos,y_pos,dragonsType));
 					condition = false;
@@ -104,22 +116,46 @@ public class GameState {
 		}
 	}
 
+	//checked
+	 boolean checkDragonAdjacentWithPlayer(int x_pos, int y_pos) {
+		if(player.getX() == x_pos)
+		{
+			if(Math.abs(player.getY()-y_pos)==1)
+				return false;
+			else
+				return true;
+		}
+		if(player.getY() == y_pos)
+		{
+			if(Math.abs(player.getX()-x_pos)==1)
+				return false;
+			else
+				return true;
+		}
+		return false;
+	}
+
+	 //checked
 	public void setDragonsSize(int dragonsSize) {
 		this.dragonsSize = dragonsSize;
 	}
 
+	//checked
 	public void AddDragons(int x, int y){
 		dragons.add(new Dragon(x, y, dragonsType));
 	}
 
+	//checked
 	public Player getPlayer(){
 		return player;
 	}
 	
+	//checked
 	public int getDragonSize(){
 		return this.dragonsSize;
 	}
 	
+	//checked
 	public void GeneratePlayer()
 	{
 		Random rand = new Random();
@@ -130,7 +166,7 @@ public class GameState {
 		{
 			int x_pos = rand.nextInt(labSize);
 			int y_pos =rand.nextInt(labSize);
-			if(labirinto.getBoard()[y_pos][x_pos] == ' ' )  // esta condição não abrange estar player ao lado do dragao
+			if(labirinto.getBoard()[y_pos][x_pos] == ' ' )
 			{
 				NewPlayer(x_pos, y_pos);
 				labirinto.getBoard()[y_pos][x_pos] = player.getEstado();
@@ -139,14 +175,17 @@ public class GameState {
 		}
 	}
 	
+	//checked
 	public void NewPlayer(int x, int y){
 		player = new Player(x, y); 
 	}
 	
+	//checked
 	public Maze getMaze(){
 		return labirinto;
 	}
 	
+	//checked
 	public void GenerateDarts(){
 
 		int quantidade;
@@ -163,7 +202,7 @@ public class GameState {
 			{
 				int x_pos = rand.nextInt(labSize);
 				int y_pos =rand.nextInt(labSize);
-				if(labirinto.getBoard()[y_pos][x_pos] == ' ' )  // esta condição não abrange estar player ao lado do dragao
+				if(labirinto.getBoard()[y_pos][x_pos] == ' ' ) 
 				{
 					AddDart(x_pos, y_pos);
 					condition = false;
@@ -172,10 +211,12 @@ public class GameState {
 		}
 	}
 	
+	//checked
 	public void AddDart(int x, int y){
 		dardos.add(new Dart(x, y));
 	}
 
+	//checked
 	public void GenerateShield(){
 		 Random rand = new Random();
 		 boolean condition = true;
@@ -193,14 +234,17 @@ public class GameState {
 		 }
 	 }
 	
+	//checked
 	public void SetShield(int x, int y){
 		shield = new Shield(x, y);
 	}
 	
+	//checked
 	public void activateEscudo()
 	{
 		escudo = true;
 	}
+	
 	
 	public boolean movePlayer(char move)
 	{
@@ -383,6 +427,7 @@ public class GameState {
 		
 	}
 	
+	//checked
 	public boolean checkPlayerWin()
 	{
 		
@@ -392,6 +437,7 @@ public class GameState {
 			return false;
 	}
 	
+	//checked
 	public void RefreshElements(){
 		PrintExit();
 		PrintSword();
@@ -400,16 +446,19 @@ public class GameState {
 		PrintPlayer();
 	}
 	
+	//checked
 	public void PrintPlayer()
 	{
 		labirinto.getBoard()[player.getY()][player.getX()]= player.getEstado();
 	}
 	
+	//checked
 	public void PrintSword()
 	{
 		labirinto.getBoard()[labirinto.sword.getY()][labirinto.sword.getX()]= labirinto.sword.getEstado();
 	}
 	
+	//checked
 	public void PrintExit()
 	{
 			if(dragonsSize == 0)
@@ -417,17 +466,20 @@ public class GameState {
 			labirinto.getBoard()[labirinto.exit.getY()][labirinto.exit.getX()]=labirinto.exit.getEstado();
 	}
 	
+	//checked
 	public void PrintDragons()
 	{
 		for(int i = 0; i < dragonsSize;i++)
 			labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()]=dragons.get(i).getEstado();
 	}
 
+	//checked
 	public void PrintDarts(){
 		for(int i = 0; i < dardos.size();i++)
 			labirinto.getBoard()[dardos.get(i).getY()][dardos.get(i).getX()]=dardos.get(i).getEstado();
 	}
 
+	
 	public boolean checkDragonsFire(){ 
 		boolean cima = true, direita = true, baixo = true, esquerda = true;
 		if (escudo)
@@ -467,6 +519,7 @@ public class GameState {
 		return false;
 	}
 
+	
 	public boolean ShootDarts(char direction){
 
 		int xJogador = player.getX();
@@ -477,10 +530,10 @@ public class GameState {
 			if (direction == 'w'){
 				int y = yJogador;
 				while(true){ //cima
-					y++;
+					y--;
 					if (labirinto.getBoard()[y][xJogador] == 'X')
 						break;
-					else if (labirinto.getBoard()[y][xJogador] == 'D' || labirinto.getBoard()[y][xJogador] == 's'){
+					else if (labirinto.getBoard()[y][xJogador] == 'D' || labirinto.getBoard()[y][xJogador] == 's' || labirinto.getBoard()[y][xJogador] == 'F'){
 						for (int i = 0; i < dragonsSize; i++){
 							if (dragons.get(i).getX() == xJogador && dragons.get(i).getY() == y){
 								dragons.get(i).setDead();
@@ -500,10 +553,10 @@ public class GameState {
 			else if (direction == 's'){
 				int y = yJogador;
 				while(true){ //baixo
-					y--;
+					y++;
 					if (labirinto.getBoard()[y][xJogador] == 'X')
 						break;
-					else if (labirinto.getBoard()[y][xJogador] == 'D' || labirinto.getBoard()[y][xJogador] == 's'){
+					else if (labirinto.getBoard()[y][xJogador] == 'D' || labirinto.getBoard()[y][xJogador] == 's'|| labirinto.getBoard()[y][xJogador] == 'F'){
 						for (int i = 0; i < dragonsSize; i++){
 							if (dragons.get(i).getX() == xJogador && dragons.get(i).getY() == y){
 								dragons.get(i).setDead();
@@ -526,7 +579,7 @@ public class GameState {
 					x++;
 					if (labirinto.getBoard()[yJogador][x] == 'X')
 						break;
-					else if (labirinto.getBoard()[yJogador][x] == 'D' || labirinto.getBoard()[yJogador][x] == 's'){
+					else if (labirinto.getBoard()[yJogador][x] == 'D' || labirinto.getBoard()[yJogador][x] == 's'|| labirinto.getBoard()[yJogador][xJogador] == 'F'){
 						for (int i = 0; i < dragonsSize; i++){
 							if (dragons.get(i).getX() == x && dragons.get(i).getY() == yJogador){
 								dragons.get(i).setDead();
@@ -550,7 +603,7 @@ public class GameState {
 					x--;
 					if (labirinto.getBoard()[yJogador][x] == 'X')
 						break;
-					else if (labirinto.getBoard()[yJogador][x] == 'D' || labirinto.getBoard()[yJogador][x] == 's'){
+					else if (labirinto.getBoard()[yJogador][x] == 'D' || labirinto.getBoard()[yJogador][x] == 's'|| labirinto.getBoard()[yJogador][xJogador] == 'F'){
 						for (int i = 0; i < dragonsSize; i++){
 							if (dragons.get(i).getX() == x && dragons.get(i).getY() == yJogador){
 								dragons.get(i).setDead();
@@ -572,6 +625,7 @@ public class GameState {
 		}
 	}
 
+	//checked
 	public void moveDragons()
 	{
 		for(int i = 0; i < dragonsSize;i++)
@@ -593,6 +647,7 @@ public class GameState {
 		}
 	}
 
+	//checked
 	public void moveDragon(int i){
 
 		Random rand = new Random();
@@ -705,10 +760,10 @@ public class GameState {
 				System.out.println("Possui escudo");
 
 
-			if(checkDragonsFire())
+		/*	if(checkDragonsFire())
 			{
 				return 2; //jogador morre queimad0
-			}
+			}*/
 			
 			move = AskUser.readChar();
 
@@ -729,7 +784,7 @@ public class GameState {
 				System.out.println("Invalid Key!1");
 			}
 
-
+ 
 		}
 
 		return 3;
