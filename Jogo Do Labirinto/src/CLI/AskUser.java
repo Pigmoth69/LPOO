@@ -45,7 +45,7 @@ public class AskUser {
 					break;
 			}
 		}
-		
+		GameState.RefreshElements();
 		switch (jogo){
 		case 1:
 			System.out.println("You got Slaughtered!");

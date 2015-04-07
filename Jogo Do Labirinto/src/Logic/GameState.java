@@ -363,6 +363,7 @@ public class GameState {
 	// checked
 	public static void RefreshElements() {
 		PrintExit();
+		PrintShield();
 		PrintSword();
 		PrintDarts();
 		PrintDragons();
@@ -372,6 +373,10 @@ public class GameState {
 	}
 	
 	
+	private static void PrintShield() {
+		labirinto.getBoard()[shield.getY()][shield.getX()] = shield.getEstado();
+	}
+
 	public static int getDardosJogador(){
 		return dardosJogador;
 	}
@@ -388,30 +393,26 @@ public class GameState {
 
 	// checked
 	public static void PrintSword() {
-		labirinto.getBoard()[labirinto.sword.getY()][labirinto.sword.getX()] = labirinto.sword
-				.getEstado();
+		labirinto.getBoard()[labirinto.sword.getY()][labirinto.sword.getX()] = labirinto.sword.getEstado();
 	}
 
 	// checked
 	public static void PrintExit() {
 		if (dragonsSize == 0)
 			labirinto.exit.setOpen();
-		labirinto.getBoard()[labirinto.exit.getY()][labirinto.exit.getX()] = labirinto.exit
-				.getEstado();
+		labirinto.getBoard()[labirinto.exit.getY()][labirinto.exit.getX()] = labirinto.exit.getEstado();
 	}
 
 	// checked
 	public static void PrintDragons() {
 		for (int i = 0; i < dragonsSize; i++)
-			labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()] = dragons
-					.get(i).getEstado();
+			labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()] = dragons.get(i).getEstado();
 	}
 
 	// checked
 	public static void PrintDarts() {
 		for (int i = 0; i < dardos.size(); i++)
-			labirinto.getBoard()[dardos.get(i).getY()][dardos.get(i).getX()] = dardos
-					.get(i).getEstado();
+			labirinto.getBoard()[dardos.get(i).getY()][dardos.get(i).getX()] = dardos.get(i).getEstado();
 	}
 
 	public static boolean ShootDarts(char direction) {
@@ -561,8 +562,7 @@ public class GameState {
 
 		int t = checkIfDragonInLineOfPlayer(i);
 		
-		if(checkIfFireballInLineOfPlayer(i)==-1)
-			return;
+		
 		
 
 		if (t != -1) {
@@ -697,6 +697,9 @@ public class GameState {
 	}
 	
 	public static int checkIfDragonInLineOfPlayer(int pos) {
+		
+		if(checkIfFireballInLineOfPlayer(pos)==-1)
+			return-1 ;
 		int x_pos = dragons.get(pos).getX();
 		int y_pos = dragons.get(pos).getY();
 
@@ -742,9 +745,13 @@ public class GameState {
 
 		for (int i = 0; i < fireballs.size(); i++) {
 
-			if (fireballs.get(i).getX() == player.getX()
-					&& fireballs.get(i).getY() == player.getY())
+			if (fireballs.get(i).getX() == player.getX() && fireballs.get(i).getY() == player.getY()|| //se a fireball estiver mesmo em cima do player
+					fireballs.get(i).getX()-1 == player.getX() && fireballs.get(i).getY() == player.getY()||//esquerda
+					fireballs.get(i).getX()+1 == player.getX() && fireballs.get(i).getY() == player.getY()||//direita
+					fireballs.get(i).getX() == player.getX() && fireballs.get(i).getY()-1 == player.getY()||//cima
+					fireballs.get(i).getX() == player.getX() && fireballs.get(i).getY()+1 == player.getY())//baixo
 				return true;
+			
 		}
 		
 		return false;
