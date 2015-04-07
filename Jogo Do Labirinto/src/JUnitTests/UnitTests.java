@@ -48,6 +48,7 @@ public class UnitTests {
 	@Test
 	public void moveTestFreeCell() {
 		GenerateTestFieldStatic();
+				
 		assertEquals(g.movePlayer('a'), true);
 		assertEquals(g.getPlayer().getX(),4);
 		assertEquals(g.getPlayer().getY(),5);

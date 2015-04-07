@@ -1,11 +1,13 @@
 package Interface;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import Elements.Exit;
 import Elements.Sword;
 
 public class Maze {
+
 	public Exit exit;
 	public Sword sword;
 	int type;
