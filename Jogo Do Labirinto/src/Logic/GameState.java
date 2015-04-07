@@ -560,6 +560,10 @@ public class GameState {
 		boolean choice = true;
 
 		int t = checkIfDragonInLineOfPlayer(i);
+		
+		if(checkIfFireballInLineOfPlayer(i)==-1)
+			return;
+		
 
 		if (t != -1) {
 			Fireball f1 = null;
@@ -581,8 +585,7 @@ public class GameState {
 				f1 = new Fireball(t, dragons.get(i).getX() - 1, dragons.get(i)
 						.getY());
 				break;
-			}
-			;
+			};
 
 			fireballs.add(f1);
 			return;
@@ -658,6 +661,41 @@ public class GameState {
 		return;
 	}
 
+	public static int checkIfFireballInLineOfPlayer(int pos){
+		int x_pos = dragons.get(pos).getX();
+		int y_pos = dragons.get(pos).getY();
+
+		// pode mudar-se a distancia desde quando ele começa a mandar a fireball
+		// mudando o labirinto.getSize() para uma constante que indica o range
+		for(int ball_pos = 0; ball_pos < fireballs.size();ball_pos++){
+			for (int i = x_pos; i < labirinto.getSize(); i++) // intercecção na	// direita
+			{
+				if (fireballs.get(ball_pos).getX()== i &&fireballs.get(ball_pos).getY()==y_pos)
+					return -1;
+			}
+
+			for (int i = y_pos; i < labirinto.getSize(); i++) // intercecção na
+																// baixo
+			{
+				if (fireballs.get(ball_pos).getX()== x_pos &&fireballs.get(ball_pos).getY()==i)
+					return -1;
+			}
+
+			for (int i = x_pos; i != 0; i--) // intercecção na esquerda
+			{
+				if (fireballs.get(ball_pos).getX()== i &&fireballs.get(ball_pos).getY()==y_pos)
+					return -1;
+			}
+
+			for (int i = y_pos; i != 0; i--) // intercecção na cima
+			{
+				if (fireballs.get(ball_pos).getX()== x_pos &&fireballs.get(ball_pos).getY()==i)
+					return -1;
+			}
+		}
+		return 0;
+	}
+	
 	public static int checkIfDragonInLineOfPlayer(int pos) {
 		int x_pos = dragons.get(pos).getX();
 		int y_pos = dragons.get(pos).getY();
