@@ -7,7 +7,7 @@ public class Fireball extends Element{
 	
 	public Fireball(int type, int x,int y)
 	{
-		this.life = 3;
+		this.life = 2;
 		this.estado= '*';
 		this.type=type;
 		this.x = x;

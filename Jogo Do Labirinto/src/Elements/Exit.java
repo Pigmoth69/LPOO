@@ -4,13 +4,13 @@ public class Exit extends Element {
 	
 	
 	public Exit(int x, int y){
-		estado = 'X';
+		estado = 'C';
 		this.x = x;
 		this.y = y;
 	}
 	
 	public void setOpen()
 	{
-		estado = 'S';
+		estado = 'O';
 	}
 }

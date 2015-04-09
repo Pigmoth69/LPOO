@@ -23,6 +23,18 @@ public class RandomMaze extends Maze {
 		GenerateSword();
 	}
 	
+	public RandomMaze(int size){
+		type = 1;
+		this.size = size;
+		board = new char[size][size];
+		visitedCellsDimension = (size-1)/2;
+		visitedCells = new char[visitedCellsDimension][visitedCellsDimension];
+		GenerateExit();
+		InicialWalls();
+		GeneratePaths();
+		GenerateSword();
+	}
+	
 	void generateMaze()
 	{
 		System.out.println("Insert the size you want to the maze: ");

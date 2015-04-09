@@ -22,6 +22,7 @@ public class AskUser {
 
 		while(jogar){
 			GameState.RefreshElements();
+			GameState.PrintLab();
 			System.out.println("Fireballs: " + GameState.getFireballs().size());
 			System.out.println("Use the following keys to play the game! ");
 			System.out.println("Move UP = 'W' Move Down = 'S' Move LEFT = 'A' Move RIGHT = 'D' Shoot DART = 'E'");
@@ -46,6 +47,7 @@ public class AskUser {
 			}
 		}
 		GameState.RefreshElements();
+		GameState.PrintLab();
 		switch (jogo){
 		case 1:
 			System.out.println("You got Slaughtered!");
