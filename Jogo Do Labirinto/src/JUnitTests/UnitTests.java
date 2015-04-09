@@ -18,8 +18,8 @@ public class UnitTests {
 	char[] swordToDragonPath = {'a','a','a','a','s','s','s','w','w','w','w','w','w'};
 	char[] dragonToexitPath = {'w','d','d','d','d','d','d','d','s','s','s','s','d'};
 	char[] exitPath = {'d','s','s','s','d','d','w','w','w','d'};
-	char[] burnPath =  {'a','a','a','a','w'};
-	char[] pathToDartKill = {'d','w','w','w','w'};
+	char[] burnPath =  {'a','w','w','w','w'};
+	char[] pathToDartKill = {'w','w','w','w'};
 	char[] toSafeSpot = {'d','s','s','s','d','d'}; 
 	
 	
@@ -39,7 +39,6 @@ public class UnitTests {
 		GameState.PrintDragons();
 		GameState.SetShield(6, 5);
 	}
-	
 	
 	public void GenerateTestFieldsRandomMaze(int tamanhoR, int dragonsR){
 		GameState.restartDragons();
@@ -62,7 +61,6 @@ public class UnitTests {
 		GameState.GenerateShield();
 		GameState.RefreshElements();
 	}
-	
 
 	@Test
 	public void moveTestFreeCell() {
@@ -159,14 +157,14 @@ public class UnitTests {
 	@Test
 	public void testFireColision(){
 		GenerateTestFieldStatic();
-		for(int i = 0; i < burnPath.length-1;i++ )
+		for(int i = 0; i < burnPath.length;i++ )
 		{
 			assertEquals(GameState.Jogar(burnPath[i]), 0);
 			GameState.RefreshElements();
-			//GameState.PrintLab();
 		}
 		
-		assertEquals(GameState.Jogar(burnPath[burnPath.length-1]), 3);
+		GameState.Jogar('w');
+		assertEquals(GameState.checkFireColisionWithPlayer(), true);
 		GameState.RefreshElements();
 	}
 	
@@ -181,18 +179,19 @@ public class UnitTests {
 		}
 	}
 	
+	
 	@Test
 	public void TestRandomGeneratedElements()
 	{
 		
-		Random rand = new Random();
-		int tamanhoR = rand.nextInt(10) + 7;
-		if (tamanhoR % 2 == 0){
-			tamanhoR++;
-		}
-		int dragonsR = rand.nextInt(5) + 1;
+//		Random rand = new Random();
+//		int tamanhoR = rand.nextInt(10) + 7;
+//		if (tamanhoR % 2 == 0){
+//			tamanhoR++;
+//		}
+//		int dragonsR = rand.nextInt(5) + 1;
 		
-		GenerateTestFieldsRandomMaze(tamanhoR, dragonsR);
+		GenerateTestFieldsRandomMaze(15, 4);
 		int dragonNum=0;
 		int dartsNum=0;
 		boolean shieldExists=false;
@@ -200,17 +199,6 @@ public class UnitTests {
 		
 		int var = GameState.getMaze().getSize();
 		
-		//GameState.PrintLab();
-		
-//		System.out.println("Escudo(X,Y):" + GameState.getShield().getX() + "," + GameState.getShield().getY());
-//		
-//		for(int i = 0; i < GameState.getDarts().size(); i++){
-//			System.out.println("Dardo " + i + " (X,Y):" + GameState.getDarts().get(i).getX() + "," + GameState.getDarts().get(i).getY());
-//		}
-//		
-//		for(int i = 0; i < GameState.getDragonSize(); i++){
-//			System.out.println("Dragon " + i + " (X,Y):" + GameState.getDragons().get(i).getX() + "," + GameState.getDragons().get(i).getY());
-//		}
 		
 		for(int i = 0; i < var;i++)
 		{
@@ -232,41 +220,59 @@ public class UnitTests {
 		
 	}
 	
+	
 	@Test
 	public void KillDragonWithDart(){
 		GenerateTestFieldStatic();
 		
 		GameState.activateEscudo();
+		GameState.AddDragons(6, 3);
+		GameState.AddDragons(8, 1);
+		GameState.AddDragons(6, 8);
+		GameState.AddDragons(3, 5);
+		GameState.setDragonsSize(GameState.getDragons().size());
+		GameState.RefreshElements();
+		assertEquals(GameState.getDragonSize(),5);
+		
 		assertEquals(GameState.getDardosJogador(), 0);
 		assertEquals(GameState.ShootDarts('d'), false);
-		assertEquals(GameState.ShootDarts('e'), false);
-		assertEquals(GameState.AddDartsToPlayer(3), 3);
+		assertEquals(GameState.ShootDarts('a'), false);
+		assertEquals(GameState.AddDartsToPlayer(6), 6);
 		assertEquals(GameState.ShootDarts('s'), false);
-		assertEquals(GameState.getDardosJogador(), 2);
+		assertEquals(GameState.getDardosJogador(), 5);
 		
+		assertEquals(GameState.Jogar('d'), 0);
+		GameState.RefreshElements();
+		assertEquals(GameState.Jogar('d'), 0);
+		GameState.RefreshElements();
+		assertEquals(GameState.getPlayer().getX(), 6);
+		assertEquals(GameState.getPlayer().getY(), 5);
+		assertEquals(GameState.ShootDarts('w'), true);
+		assertEquals(GameState.ShootDarts('a'), true);
+		assertEquals(GameState.ShootDarts('s'), true);
+		GameState.RefreshElements();
+		assertEquals(GameState.ShootDarts('w'), false);
 		
 		for(int i = 0; i <pathToDartKill.length ; i++)
 		{
 			assertEquals(GameState.Jogar(pathToDartKill[i]), 0);
 			GameState.RefreshElements();
 		}
+		assertEquals(GameState.Jogar('w'), 0);
+		GameState.RefreshElements();
 		assertEquals(GameState.checkDragonsColision(),false);
 		
+		assertEquals(GameState.AddDartsToPlayer(2), 3);
 		assertEquals(GameState.ShootDarts('a'), true);
-		assertEquals(GameState.getDardosJogador(), 1);
+		assertEquals(GameState.getDardosJogador(), 2);
 		GameState.RefreshElements();
-		assertEquals(GameState.getDragonSize(),0);
-		
-		GameState.AddDragons(8, 1);
-		GameState.AddDragons(6, 8);
-		GameState.setDragonsSize(GameState.getDragons().size());
-		GameState.RefreshElements();
-		assertEquals(GameState.getDragonSize(),2);
-		assertEquals(GameState.AddDartsToPlayer(1), 2);
-		assertEquals(GameState.ShootDarts('d'), true);
-		assertEquals(GameState.getDardosJogador(), 1);
 		assertEquals(GameState.getDragonSize(),1);
-		assertEquals(GameState.ShootDarts('s'), true);
+
+		assertEquals(GameState.ShootDarts('d'), true);
+		GameState.RefreshElements();
+		assertEquals(GameState.getDardosJogador(), 1);
+		assertEquals(GameState.getDragonSize(),0);
+		assertEquals(GameState.ShootDarts('s'), false);
 		assertEquals(GameState.getDardosJogador(), 0);
 		assertEquals(GameState.getDragonSize(),0);
 		GameState.RefreshElements();
@@ -298,7 +304,6 @@ public class UnitTests {
 		}
 		
 	}
-	
 	
 	
 	

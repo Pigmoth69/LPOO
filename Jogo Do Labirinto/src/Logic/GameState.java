@@ -1,3 +1,8 @@
+/**
+ * GameState.java - this file is related to the logic of the program.
+ * @author Daniel Reis
+ * @author João Baião
+ */
 package Logic;
 
 import java.util.ArrayList;
@@ -33,6 +38,9 @@ public class GameState {
 	private static Shield shield;
 	private static boolean escudo = false;
 
+	/**  
+	 * Base function that calls other functions to generate "Elements" 
+	 */ 
 	public static void runGame() {
 		saida = labirinto.exit;
 		sword = labirinto.sword;
@@ -40,10 +48,13 @@ public class GameState {
 		GenerateDragons();
 		GenerateDarts();
 		GenerateShield();
-
 	}
 
-	// checked
+	/**  
+	 * Calls the maze constructor as either a "static maze" or a "random maze"
+	 * @param mazeType (0 for Static and 1 for Random)
+	 * @see Interface package 
+	 */ 
 	public static void SetMaze(int mazeType) {
 		if (mazeType == 0)
 			labirinto = new StaticMaze();
@@ -51,59 +62,87 @@ public class GameState {
 			labirinto = new RandomMaze();
 	}
 	
-	//checked
+	/**  
+	 * Create a random maze o a certain size
+	 * @param size - size of the maze
+	 */ 
 	public static void SetRandomMaze(int size){
 		labirinto = new RandomMaze(size);
 	}
 
-	// checked
+	/**  
+	 * returns the number of darts available to pickup
+	 * @return the number of darts available to pickup
+	 */ 
 	public static int getNumDardos() {
 		return dardos.size();
 	}
 
-	//checked
+	/**  
+	 * Reset the fireballs arrayList
+	 */ 
 	public static void restartFireballs(){
 		fireballs = new ArrayList<Fireball>();
 	}
 	
-	//checked
+	/**  
+	 * Reset the darts arrayList 
+	 */ 
 	public static void restartDarts(){
 		dardos = new ArrayList<Dart>();
 	}
 	
-	//checked
+	/**  
+	 * Reset the dragons arrayList  
+	 */ 
 	public static void restartDragons(){
 		dragons = new ArrayList<Dragon>();
 	}
 	
-	//checked
+	/**  
+	 * returns the object corresponding to the shield
+	 * @return the shield
+	 */ 
 	public static Shield getShield(){
 		return shield;
 	}
 	
-	//checked
+	/**  
+	 * returns the arrayList with all darts available to pickup on the board
+	 * @return the arrayList with all darts available to pickup on the board
+	 */ 
 	public static ArrayList<Dart> getDarts(){
 		return dardos;
 	}
 
-	//checked
+	/**  
+	 * returns the arrayList with all dragons alive on the board
+	 * @return returns the arrayList with all dragons alive on the board
+	 */ 
 	public static ArrayList<Dragon> getDragons(){
 		return dragons;
 	}
 	
-	// checked
+	/**  
+	 * Set the type of dragons
+	 * @param the type of dragons (0 -frozen, 1-moving, 2-moving or sleeping) 
+	 */ 
 	public static void setDragonsType(int type) {
 		dragonsType = type;
 	}
 	
-	//checked
+	/**  
+	 * Changes the type of all dragons alive 
+	 */ 
 	public static void setAllDragonsType(){
 		for (int i = 0; i < dragons.size(); i++){
 			dragons.get(i).setType(dragonsType);
 		}
 	}
 
-	// checked
+	/**  
+	 * Randomly generate dragons on the board 
+	 */ 
 	public static void GenerateDragons() {
 		Random rand = new Random();
 		for (int i = 0; i < dragonsSize; i++) {
@@ -132,7 +171,12 @@ public class GameState {
 		}
 	}
 
-	// checked
+	/**  
+	 * check if the player is adjacent to a certain place
+	 * @param x_pos - the x coordinate
+	 * @param y_pos - the y coordinate
+	 * @return false if the player is not adjacent and true otherwise
+	 */ 
 	private static boolean checkDragonAdjacentWithPlayer(int x_pos, int y_pos) {
 		if (player.getX() == x_pos) {
 			if (Math.abs(player.getY() - y_pos) == 1)
@@ -149,27 +193,42 @@ public class GameState {
 		return false;
 	}
 
-	// checked
+	/**  
+	 * set the ammount of dragons wanted
+	 * @param size - ammount of dragons 
+	 */ 
 	public static void setDragonsSize(int size) {
 		dragonsSize = size;
 	}
 
-	// checked
+	/**  
+	 * add a dragon to a certain location
+	 * @param x - x coordinate desired
+	 * @param y - y coordinate desired
+	 */ 
 	public static void AddDragons(int x, int y) {
 		dragons.add(new Dragon(x, y, dragonsType));
 	}
 
-	// checked
+	/**  
+	 * returns the object relative to the player
+	 * @return the object relative to the player
+	 */ 
 	public static Player getPlayer() {
 		return player;
 	}
 
-	// checked
+	/**  
+	 * returns the ammount of dragons defined
+	 * @return the ammount of dragons defined 
+	 */ 
 	public static int getDragonSize() {
 		return dragonsSize;
 	}
 
-	// checked
+	/**  
+	 * Generates a random available position in the board for the player
+	 */ 
 	public static void GeneratePlayer() {
 		Random rand = new Random();
 		boolean condition = true;
@@ -186,17 +245,26 @@ public class GameState {
 		}
 	}
 
-	// checked
+	/**  
+	 * places the player in a certain position in the board
+	 * @param x - x coordinate
+	 * @param y - y coordinate
+	 */ 
 	public static void NewPlayer(int x, int y) {
 		player = new Player(x, y);
 	}
 
-	// checked
+	/**  
+	 * return the maze object
+	 * @return the maze object 
+	 */ 
 	public static Maze getMaze() {
 		return labirinto;
 	}
 
-	// checked
+	/**  
+	 * generates available places to hold a random ammount of darts  
+	 */ 
 	public static void GenerateDarts() {
 
 		int quantidade;
@@ -228,17 +296,28 @@ public class GameState {
 		}
 	}
 
-	// checked
+	/**  
+	 * add a dart to the dart list
+	 * @param x - x coordinate
+	 * @param y - y coordinate
+	 */ 
 	public static void AddDart(int x, int y) {
 		dardos.add(new Dart(x, y));
 	}
 	
+	/**  
+	 * add a certain ammount of darts to the player pocket
+	 * @param ammount of darts to add
+	 * @return the total ammount of darts of the player  
+	 */ 
 	public static int AddDartsToPlayer(int ammount){
 		dardosJogador+= ammount;
 		return dardosJogador;
 	}
 
-	// checked
+	/**  
+	 * generates a random available place for the shield 
+	 */ 
 	public static void GenerateShield() {
 		Random rand = new Random();
 		boolean condition = true;
@@ -258,20 +337,33 @@ public class GameState {
 		}
 	}
 
-	// checked
+	/**  
+	 * set the coordinates of the shield
+	 * @param x - x coordinate
+	 * @param y - y coordinate
+	 */ 
 	public static void SetShield(int x, int y) {
 		shield = new Shield(x, y);
 	}
 
+	/**  
+	 *  remove the shield from the board
+	 */ 
 	public static void RemoveShieldFromBoard(){
 		shield.removeShield();
 	}
 
-	// checked
+	/**  
+	 * give the player a shield 
+	 */ 
 	public static void activateEscudo() {
 		escudo = true;
 	}
 
+	/**  
+	 * check if the player can move. if he can, it does move him as well
+	 * @param move - the char of the direction ('w', 'a', 's', 'd')
+	 */ 
 	public static boolean movePlayer(char move) {
 		if (move == 'a') {
 			if (labirinto.getBoard()[player.getY()][player.getX() - 1] == 'X'
@@ -389,6 +481,10 @@ public class GameState {
 
 	}
 
+	/**  
+	 * check if a player collided with a dragon 
+	 * @return true if the player died or false otherwise  
+	 */ 
 	public static boolean checkDragonsColision() {
 		for (int i = 0; i < dragonsSize; i++) {
 			if (dragons.get(i).getX() == labirinto.sword.getX()
@@ -422,7 +518,10 @@ public class GameState {
 
 	}
 
-	// checked
+	/**  
+	 * check if the player is in the exit place
+	 * @return true if the player won, false otherwise
+	 */ 
 	public static boolean checkPlayerWin() {
 
 		if (player.getX() == labirinto.exit.getX()&& player.getY() == labirinto.exit.getY())
@@ -431,7 +530,9 @@ public class GameState {
 			return false;
 	}
 
-	// checked
+	/**  
+	 * refresh the position and state of all objects 
+	 */ 
 	public static void RefreshElements() {
 		PrintExit();
 		PrintShield();
@@ -442,54 +543,80 @@ public class GameState {
 		PrintPlayer();
 	}
 	
-	//checked
+	/**  
+	 * print the board to the console 
+	 */ 
 	public static void PrintLab(){
 		labirinto.PrintLab();
 	}
 	
-	
+	/**  
+	 * change the board char relative to the shield 
+	 */ 
 	private static void PrintShield() {
 		labirinto.getBoard()[shield.getY()][shield.getX()] = shield.getEstado();
 	}
 
+	/**  
+	 * return the ammount of darts that the player has
+	 * @return ammount of darts available 
+	 */ 
 	public static int getDardosJogador(){
 		return dardosJogador;
 	}
 	
-	//checked
+	/**  
+	 * return the arraylist of the fireballs
+	 * @return the arraylist of the fireballs   
+	 */ 
 	public static ArrayList<Fireball> getFireballs(){
 		return fireballs;
 	}
 
-	// checked 
+	/**  
+	 * change the board char relative to the player 
+	 */ 
 	public static void PrintPlayer() {
 		labirinto.getBoard()[player.getY()][player.getX()] = player.getEstado();
 	}
 
-	// checked
+	/**  
+	 * change the board char relative to the sword  
+	 */ 
 	public static void PrintSword() {
 		labirinto.getBoard()[labirinto.sword.getY()][labirinto.sword.getX()] = labirinto.sword.getEstado();
 	}
 
-	// checked
+	/**  
+	 * change the board char relative to the exit 
+	 */ 
 	public static void PrintExit() {
 		if (dragonsSize == 0)
 			labirinto.exit.setOpen();
 		labirinto.getBoard()[labirinto.exit.getY()][labirinto.exit.getX()] = labirinto.exit.getEstado();
 	}
 
-	// checked
+	/**  
+	 * change all board chars relative to all dragons
+	 */ 
 	public static void PrintDragons() {
 		for (int i = 0; i < dragonsSize; i++)
 			labirinto.getBoard()[dragons.get(i).getY()][dragons.get(i).getX()] = dragons.get(i).getEstado();
 	}
 
-	// checked
+	/**  
+	 * change all board chars relative to all darts
+	 */ 
 	public static void PrintDarts() {
 		for (int i = 0; i < dardos.size(); i++)
 			labirinto.getBoard()[dardos.get(i).getY()][dardos.get(i).getX()] = dardos.get(i).getEstado();
 	}
 
+	/**  
+	 * shoot a dart in a certain direction
+	 * @param direction to shoot
+	 * @return true if kills, false otherwise
+	 */ 
 	public static boolean ShootDarts(char direction) {
 
 		int xJogador = player.getX();
@@ -616,7 +743,9 @@ public class GameState {
 		}
 	}
 
-	// checked
+	/**  
+	 * check if the dragons are sleeping, if not, they move 
+	 */ 
 	public static void moveDragons() {
 		for (int i = 0; i < dragonsSize; i++) {
 			if (dragons.get(i).getNumPlaysSleeping() > 0) {
@@ -630,7 +759,11 @@ public class GameState {
 		}
 	}
 
-	// checked
+	/**  
+	 * move a dragon in a certain position of the dragon list
+	 * @param i - index in "dragons" ArrayList
+	 * @return true if he successfully moved, false otherwise
+	 */ 
 	public static boolean moveDragon(int i) {
 
 		if (i >= dragonsSize)
@@ -738,6 +871,11 @@ public class GameState {
 		return false;
 	}
 
+	/**  
+	 * checks if a fireball is in line of the player
+	 * @param pos- position of the dragon in dragons ArrayLIst
+	 * @return -1 if it is in line, 0 otherwise
+	 */ 
 	public static int checkIfFireballInLineOfPlayer(int pos){
 		int x_pos = dragons.get(pos).getX();
 		int y_pos = dragons.get(pos).getY();
@@ -773,6 +911,11 @@ public class GameState {
 		return 0;
 	}
 	
+	/**  
+	 * checks if a dragon is in line of the player
+	 * @param pos- position of the dragon in dragons ArrayLIst
+	 * @return -1 if it is in line, 0 otherwise   
+	 */ 
 	public static int checkIfDragonInLineOfPlayer(int pos) {
 		
 		if(checkIfFireballInLineOfPlayer(pos)==-1)
@@ -818,6 +961,10 @@ public class GameState {
 		return -1;
 	}
 
+	/**  
+	 * checks if a fireball collided with the player
+	 * @return true if it did, false otherwise 
+	 */ 
 	public static boolean checkFireColisionWithPlayer() {
 
 		for (int i = 0; i < fireballs.size(); i++) {
@@ -834,6 +981,9 @@ public class GameState {
 		return false;
 	}
 
+	/**  
+	 * move all fireballs
+	 */ 
 	public static void moveFireballs() {
 		for (int i = 0; i < fireballs.size(); i++) {
 			if (!moveFireball(i))
@@ -841,6 +991,11 @@ public class GameState {
 		}
 	}
 
+	/**  
+	 * move a certain fireball
+	 * @param i - pos of a fireball in the fireball ArrayList
+	 * @return true if it did move, false if it extinguished 
+	 */ 
 	public static boolean moveFireball(int i) {
 
 		labirinto.getBoard()[fireballs.get(i).getY()][fireballs.get(i).getX()] = ' ';
@@ -900,16 +1055,28 @@ public class GameState {
 		return true;
 	}
 
+	/**  
+	 * change all board chars relative to all fireballs  
+	 */ 
 	public static void PrintFireballs() {
 		for (int i = 0; i < fireballs.size(); i++) {
 			labirinto.getBoard()[fireballs.get(i).getY()][fireballs.get(i).getX()] = fireballs.get(i).getEstado();
 		}
 	}
 	
+	/**  
+	 * check if the player has a shield
+	 * @return a boolean that refers to the possession the shield or not
+	 */ 
 	public static boolean hasShield(){
 		return escudo;
 	}
 
+	/**  
+	 * move the player, all fireballs and dragons and check some possible outcomes
+	 * @param move - the direction for the player to move
+	 * @return an int refering to a possible outcome (1 - player dies, 2 - player win, 3- player is killed by fire, 0 - none of the others) 
+	 */ 
 	public static int Jogar(char move) 
 	{
 			movePlayer(move);
@@ -936,4 +1103,5 @@ public class GameState {
 
 		return 0;
 	}
+
 };
