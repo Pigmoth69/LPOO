@@ -20,7 +20,7 @@ public class UnitTests {
 	char[] exitPath = {'d','s','s','s','d','d','w','w','w','d'};
 	char[] burnPath =  {'a','a','a','a','w'};
 	char[] pathToDartKill = {'d','w','w','w','w'};
-	char[] toSafeSpot = {'d','s','s','s','d','d'};
+	char[] toSafeSpot = {'d','s','s','s','d','d'}; 
 	
 	
 	
