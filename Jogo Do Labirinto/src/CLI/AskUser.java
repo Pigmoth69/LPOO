@@ -1,3 +1,8 @@
+/**
+ * GameState.java - this file is related to the logic of the program.
+ * @author Daniel Reis
+ * @author João Baião
+ */
 package CLI;
 
 import java.io.IOException;
@@ -9,7 +14,9 @@ public class AskUser {
 
 
 
-
+	/**  
+	 * Main function.
+	 */ 
 	public static void main(String args[]){
 		boolean jogar = true;
 		char move;
@@ -65,11 +72,17 @@ public class AskUser {
 
 	}
 	 
+	/**  
+	 * choose the type of maze pretended
+	 */ 
 	public static void chooseMazeType()
 	{
 		GameState.SetMaze(readInteger(0, 1, "Which game mode you want? (0 = StaticMaze, 1 = RandomMaze)\n"));
 	}
 	
+	/**  
+	 * set the amount of dragons pretended
+	 */ 
 	public static void chooseDragonsNum()
 	{
 		GameState.setDragonsSize(readInteger(0, 10, "Number of dragons you want?\n"));
@@ -77,6 +90,13 @@ public class AskUser {
 	
 	private static Scanner in;
 	
+	/**  
+	 * read an integer from the keyboard
+	 * @param i - min value
+	 * @param j - max param
+	 * @param prompt - phrase to print
+	 * @returns the integer
+	 */ 
 	private static int readInteger(int i, int j, String prompt)
 	{
 		int userInput;
@@ -91,6 +111,9 @@ public class AskUser {
 		return userInput;
 	}
 
+	/**  
+	 * choose the type of dragons pretended
+	 */ 
 	public static void chooseDragonType() 
 	{
 		System.out.println("0 - FROZEN DRAGON");
@@ -99,15 +122,14 @@ public class AskUser {
 		GameState.setDragonsType(readInteger(0, 2, "What dragon type do you want?\n"));
 	}
 	
+	/**  
+	 * read a char from the keyboard
+	 * @returns the char
+	 */ 
 	public static char readChar()
 	{
 		Scanner in = new Scanner(System.in);
 		return in.next().charAt(0);
 	}
-	
-
-	
-	
-	
-	
+		
 }

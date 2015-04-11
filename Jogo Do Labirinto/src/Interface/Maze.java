@@ -1,3 +1,8 @@
+/**
+ * Maze.java - this file is related to the board of the game
+ * @author Daniel Reis
+ * @author João Baião
+ */
 package Interface;
 
 import java.io.Serializable;
@@ -14,17 +19,26 @@ public class Maze {
 	char board[][];
 	int size;
 	
-	
+	/**  
+	 * return the board
+	 * @return the char relative to the board
+	 */ 
 	public char[][] getBoard()
 	{
 		return board;
 	}
 	
+	/**  
+	 * return the size of the board
+	 * @return the size of the board   
+	 */ 
 	public int getSize(){
 		return size;
 	}
 	
-	
+	/**  
+	 *  draws the maze into the console
+	 */ 
 	public void PrintLab()
 	{
 		System.out.println("Size: " + size);
@@ -37,18 +51,35 @@ public class Maze {
 		}
 	}
 	
+	/**  
+	 * set the coordinates of the Exit
+	 * @param x - x coordinates
+	 * @param y - y coordinates
+	 */ 
 	public void SetExit(int x, int y){
 		exit = new Exit(x, y);
 	}
 	
+	/**  
+	 * return the object of the exit
+	 * @return the object of the exit  
+	 */ 
 	public Exit getExit(){
 		return exit;
 	}
 	
+	/**  
+	 * Create a sword at (x, y)
+	 * @param x - x coordinates
+	 * @param y - y coordinates
+	 */ 
 	public void SetSword(int x, int y){
 		sword = new Sword(x, y);
 	}
 	
+	/**  
+	 * Generate a sword at a random location 
+	 */ 
 	public void GenerateSword()
 	{
 		Random rand = new Random();
@@ -66,8 +97,5 @@ public class Maze {
 			}
 		}
 	}
-
-	
-
 
 }

@@ -1,3 +1,8 @@
+/**
+ * RandomMaze.java - this file is related to the creation of a random maze
+ * @author Daniel Reis
+ * @author João Baião
+ */
 package Interface;
 import java.util.Random;
 import java.util.Scanner;
@@ -15,7 +20,9 @@ public class RandomMaze extends Maze {
 	char exitLocation;
 	int pathPlace = 0;
 	
-	
+	/**  
+	 * Constructor of the class
+	 */ 
 	public RandomMaze()
 	{
 		type = 1;
@@ -23,6 +30,10 @@ public class RandomMaze extends Maze {
 		GenerateSword();
 	}
 	
+	/**  
+	 * Creates a random maze of a certain size
+	 * @param size of the maze
+	 */ 
 	public RandomMaze(int size){
 		type = 1;
 		this.size = size;
@@ -35,6 +46,9 @@ public class RandomMaze extends Maze {
 		GenerateSword();
 	}
 	
+	/**  
+	 * Ask the user the size pretended and create a maze of that size
+	 */ 
 	void generateMaze()
 	{
 		System.out.println("Insert the size you want to the maze: ");
@@ -48,6 +62,9 @@ public class RandomMaze extends Maze {
 		GeneratePaths();
 	}
 	
+	/**  
+	 * print the visitedCells(creation of the maze) board
+	 */ 
 	void PrintVerified(){
 		for(int i = 0; i < visitedCellsDimension; i++){
 			System.out.print(i+" ");
@@ -61,7 +78,9 @@ public class RandomMaze extends Maze {
 		}
 	}
 
-	
+	/**  
+	 * generate an exit at a random location
+	 */ 
 	void GenerateExit(){
 		
 		int saida;
@@ -104,10 +123,9 @@ public class RandomMaze extends Maze {
 		SetExit(x, y);
 	}
 	
-	
-	
-	
-	
+	/**  
+	 * draws the walls at the board char
+	 */ 
 	void InicialWalls(){
 		for (int i = 0; i < size; i++){
 			board[0][i] = 'X'; //Topo
@@ -123,6 +141,9 @@ public class RandomMaze extends Maze {
 		}
 	}
 	
+	/**  
+	 * Generate all paths of the maze
+	 */ 
 	void GeneratePaths(){
 		guideCell[0] = (exit.x-1)/2;
 		guideCell[1] = (exit.y-1)/2;
@@ -161,6 +182,10 @@ public class RandomMaze extends Maze {
 		}
 	}
 	
+	/**  
+	 * check if any path can be taken
+	 * @returns true if it does, false otherwise
+	 */ 
 	boolean CanMove(){
 		if (!CanMoveDir(0) && !CanMoveDir(1) && !CanMoveDir(2) && !CanMoveDir(3))
 			return false;
@@ -168,6 +193,11 @@ public class RandomMaze extends Maze {
 			return true;
 	}
 	
+	/**  
+	 * check if the path of a certain direction can be taken
+	 * @param the direction pretended
+	 * @returns true if it does, false otherwise
+	 */ 
 	boolean CanMoveDir(int direction){
 		if (direction == 0){ //cima
 			if (guideCell[1] == 0)
@@ -208,6 +238,10 @@ public class RandomMaze extends Maze {
 		
 	}
 	
+	/**  
+	 * move the path into a certain direction
+	 * @param direction pretended
+	 */ 
 	void MovePath(int direction){
 		if (direction == 0){ //cima
 			visitedCells[guideCell[1]-1][guideCell[0]] = '+';
@@ -242,6 +276,11 @@ public class RandomMaze extends Maze {
 			pathHistory[pathPlace][1] = guideCell[1];
 		}
 	}
+	
+	/**  
+	 * return the type of maze
+	 * @returns 0 or 1, static or random
+	 */ 
 	int getType()
 	{
 		return type;
