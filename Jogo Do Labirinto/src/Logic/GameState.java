@@ -5,6 +5,7 @@
  */
 package Logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -1104,4 +1105,62 @@ public class GameState {
 		return 0;
 	}
 
+	public static Exit getExit() {
+		return saida;
+	}
+
+	
+	public static int getDragonsType() {
+		return dragonsType;
+	}
+
+	public static Sword getSword() {
+		return sword;
+	}
+
+	
+	public static void setMaze(Maze labirinto2) {
+		labirinto = labirinto2;		
+	}
+
+
+	public static void setSword(Sword sword2) {
+		sword = sword2;
+	}
+
+
+	public static void setExit(Exit saida2) {
+		saida = saida2;
+	}
+
+	
+	public static void setDragonsArray(ArrayList<Dragon> dragons2) {
+		dragons = dragons2;
+	}
+
+
+	public static void setFireballs(ArrayList<Fireball> fireballs2) {
+		fireballs = fireballs2;
+	}
+
+	
+	public static void setPlayer(Player player2) {
+		player = player2;
+	}
+
+
+	public static void setDarts(ArrayList<Dart> dardos2) {
+		dardos = dardos2;
+	}
+
+
+	public static void SetShield(Shield shield2) {
+		shield = shield2;
+	}
+
+	public static void SetShieldBol(boolean escudo2) {
+		escudo = escudo2;
+	}
+
+	
 };

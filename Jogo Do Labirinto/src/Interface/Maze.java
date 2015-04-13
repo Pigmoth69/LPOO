@@ -11,7 +11,7 @@ import java.util.Random;
 import Elements.Exit;
 import Elements.Sword;
 
-public class Maze {
+public class Maze implements Serializable{
 
 	public Exit exit;
 	public Sword sword;

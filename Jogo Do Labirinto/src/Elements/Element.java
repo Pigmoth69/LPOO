@@ -5,7 +5,9 @@
  */
 package Elements;
 
-public class Element {
+import java.io.Serializable;
+
+public class Element implements Serializable{
 	char estado = ' ';
 	public int x;
 	public int y;

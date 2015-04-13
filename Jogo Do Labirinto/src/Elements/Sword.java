@@ -5,6 +5,8 @@
  */
 package Elements;
 
+import java.io.Serializable;
+
 public class Sword extends Element{
 
 	/**  

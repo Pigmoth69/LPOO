@@ -8,6 +8,7 @@ package CLI;
 import java.io.IOException;
 import java.util.Scanner;
 
+import Files.FileSaving;
 import Logic.GameState;
 
 public class AskUser {
@@ -22,10 +23,12 @@ public class AskUser {
 		char move;
 		int jogo=0;
 
-		chooseMazeType();
-		chooseDragonsNum();
-		chooseDragonType();		
-		GameState.runGame();
+		if(!FileSaving.LoadGameState()){
+			chooseMazeType();
+			chooseDragonsNum();
+			chooseDragonType();		
+			GameState.runGame();
+		}
 
 		while(jogar){
 			GameState.RefreshElements();
@@ -47,11 +50,16 @@ public class AskUser {
 			else
 			{
 				jogo = GameState.Jogar(move);
-				if(jogo == 0)
-					continue;
-				else
-					break;
+				
+				FileSaving.SaveGameState();
+				return;
+				
+//				if(jogo == 0)
+//					continue;
+//				else
+//					break;
 			}
+			
 		}
 		GameState.RefreshElements();
 		GameState.PrintLab();
